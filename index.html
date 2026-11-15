@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex,nofollow">
+<title>이오북스 마케팅 허브</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+:root{--lime:#b9d232;--lime-d:#7f9413;--sky:#8fb1dd;--sky-d:#3f6fb0;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;--bg:#f6f7f9;--card:#fff;--warn:#fff4c2;--bad:#fde2e2;--good:#e3f2d3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Pretendard,"IBM Plex Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+a{color:var(--sky-d)}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.top{display:flex;align-items:center;gap:12px;padding:10px 20px}
+.top img{height:26px}
+.top b{font-size:16px}
+.top .who{margin-left:auto;font-size:13px;color:var(--sub)}
+nav{display:flex;gap:2px;padding:0 14px;overflow-x:auto;white-space:nowrap}
+nav a{padding:9px 12px;text-decoration:none;color:var(--sub);border-bottom:3px solid transparent;font-weight:500}
+nav a.on{color:var(--ink);border-color:var(--lime)}
+main{max-width:1180px;margin:0 auto;padding:20px}
+h1{font-size:20px;margin:0 0 4px}
+h2{font-size:16px;margin:0 0 10px}
+.guide{background:#fffbe6;border:1px solid #f0e2a0;border-radius:8px;padding:9px 14px;margin:10px 0 16px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+.row{display:flex;gap:16px;flex-wrap:wrap}
+.row>.card{flex:1;min-width:300px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--line);border-left:5px solid var(--sky);border-radius:10px;padding:12px 14px;cursor:pointer}
+.kpi.hot{border-left-color:#e06666}
+.kpi b{display:block;font-size:26px;line-height:1.2}
+.kpi span{font-size:13px;color:var(--sub)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-weight:600;color:var(--sub);border-bottom:2px solid var(--line);padding:7px 8px;white-space:nowrap}
+td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
+tr.click{cursor:pointer}
+tr.click:hover{background:#fafbfc}
+td small{display:block;color:var(--sub);margin-top:2px}
+.badge{display:inline-block;padding:1px 9px;border-radius:99px;font-size:12.5px;font-weight:600;white-space:nowrap;background:#eef0f3;color:#4b5563}
+.b-good{background:var(--good);color:#3d6b12}.b-warn{background:var(--warn);color:#7a5b00}.b-bad{background:var(--bad);color:#a12626}.b-wait{background:#e7eefb;color:#2c5aa0}.b-fb{background:#ece3fa;color:#5b3aa0}
+.hist{border-left:3px solid var(--line);margin:8px 0 0 4px;padding-left:12px;font-size:14px}.hist div{margin-bottom:8px}.hist b{font-weight:600}
+.over{color:#a12626;font-weight:600}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.bar .sp{margin-left:auto}
+select,input,textarea{font:inherit;border:1px solid #cfd4dc;border-radius:7px;padding:6px 9px;background:#fff;color:var(--ink);max-width:100%}
+textarea{width:100%;resize:vertical}
+button{font:inherit;border:1px solid #cfd4dc;background:#fff;border-radius:7px;padding:6px 13px;cursor:pointer;font-weight:500}
+button.pri{background:var(--ink);border-color:var(--ink);color:#fff}
+button.ai{background:var(--lime);border-color:var(--lime-d);color:#26300a}
+button:disabled{opacity:.45;cursor:not-allowed}
+.studio{display:grid;grid-template-columns:300px 1fr;gap:16px}
+.list{max-height:78vh;overflow:auto}
+.item{padding:9px 10px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px}
+.item.on{background:#f3f8dc}
+.item small{color:var(--sub);display:block}
+.step{border-top:1px solid var(--line);padding-top:14px;margin-top:14px}
+.step h3{margin:0 0 8px;font-size:15px}
+.step h3 i{font-style:normal;display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;background:var(--sky);color:#fff;font-size:13px;margin-right:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld{display:flex;flex-direction:column;gap:3px;margin-bottom:10px;font-size:13px;color:var(--sub)}
+.fld>*{font-size:15px;color:var(--ink)}
+.muted{color:var(--sub);font-size:13px}
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.45);display:flex;align-items:flex-start;justify-content:center;padding:40px 14px;z-index:20;overflow:auto}
+.modal>div{background:#fff;border-radius:12px;padding:20px;width:min(640px,100%)}
+.busy{position:fixed;inset:0;background:rgba(255,255,255,.75);display:flex;align-items:center;justify-content:center;z-index:30;font-weight:600}
+.login{max-width:380px;margin:12vh auto;text-align:center}
+.err{color:#a12626;font-size:14px;margin-top:10px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{padding:4px 12px;border-radius:99px;border:1px solid #cfd4dc;background:#fff;cursor:pointer;font-size:14px}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.demo{background:#fde2e2;color:#a12626;text-align:center;font-size:13px;padding:4px}
+pre.msg{white-space:pre-wrap;font:inherit;background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:12px;margin:0}
+@media(max-width:820px){.studio{grid-template-columns:1fr}.list{max-height:240px}.grid2{grid-template-columns:1fr}main{padding:12px}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ===== 설정: 배포 안내에 따라 두 값을 채웁니다 ===== */
+const CONFIG = {
+  GAS_URL: 'https://script.google.com/macros/s/AKfycbzi0ElZqcdOl86p9OQ2IxkSJspb0MGwcEwMZVDQTcYIvsIvDhqyCfmSRp4wlzl4ERjG/exec',      // 앱스 스크립트 웹앱 주소 (…/exec)
+  CLIENT_ID: '691949344595-s1hq543e7l69qjfnjb7d4uq71pr01625.apps.googleusercontent.com'     // 구글 OAuth 클라이언트 ID (….apps.googleusercontent.com)
+};
+const MOCK = !CONFIG.GAS_URL || /[?&]demo=1/.test(location.search);
+
+/* ===== 공통 ===== */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const S = { user: null, d: {}, view: 'home', f: { tasks: { 영역: '', 담당조직: '', 상태: '' }, skill: '공통', req: { who: 'mine', st: '' } }, people: [], img: {}, sel: '', cmp: false, busy: '', err: '', modal: null };
+const ST = { 과업: ['예정', '진행 중', '대기', '지연', '완료', '보류'], 요청: ['요청', '진행', '피드백', '완료', '보류'], 콘텐츠: ['예정', '작성 중', '검수 요청', '수정 요청', '승인', '발행 완료'] };
+const TYPES = ['도서 소개', '정보형', '이용 안내', '이오북스 이야기'];
+const SKILL_TYPES = ['공통', ...TYPES, '점검', '이미지', '데일리 뉴스'];
+const ROLE_EDIT = { 과업: ['admin', 'eo', 'sf'], 요청: ['admin', 'eo', 'sf', 'sales'], 회의: ['admin', 'eo', 'sf'], 문서: ['admin', 'eo', 'sf'], 콘텐츠: ['admin', 'eo', 'sf'], 뉴스: ['admin', 'eo', 'sf'], 도서: ['admin', 'eo'], 스킬: ['admin', 'eo'], 뉴스소스: ['admin', 'eo'] };
+const ROLE_NAME = { admin: '관리자', eo: '이오북스 담당', sf: '세일즈핏', sales: '영업', viewer: '열람' };
+const KEY = { 사용자: '이메일' };
+const can = t => !!S.user && (ROLE_EDIT[t] || []).includes(S.user.role);
+const approver = () => !!S.user && ['admin', 'eo'].includes(S.user.role);
+const NAV = [['home', '홈'], ['requests', '업무 요청'], ['tasks', '과업'], ['meetings', '회의록'], ['calendar', '콘텐츠 캘린더'], ['studio', '블로그 스튜디오'], ['news', '데일리 뉴스'], ['leads', '견본 신청'], ['docs', '문서'], ['skills', '콘텐츠 스킬']];
+const FORM = {
+  과업: [['영역', 'select', ['기반', '콘텐츠', '광고', '견본·리드', '제휴', '영업', '운영']], ['과업', 'text'], ['내용', 'area'], ['담당조직', 'select', ['이오북스', '세일즈핏', '공동']], ['담당자', 'text'], ['마감', 'text'], ['상태', 'select', ST.과업], ['근거', 'text']],
+  요청: [['제목', 'text'], ['담당자', 'select', () => S.people.map(p => p.이름)], ['기한', 'date'], ['우선순위', 'select', ['보통', '긴급', '높음', '낮음']], ['내용', 'area'], ['관련문서', 'text']],
+  회의: [['일시', 'text'], ['제목', 'text'], ['참석', 'text'], ['요약', 'area'], ['결정사항', 'area'], ['링크', 'text']],
+  문서: [['위치', 'text'], ['문서명', 'text'], ['링크', 'text'], ['작성', 'text'], ['요약', 'area'], ['열람상태', 'text']],
+  뉴스소스: [['이름', 'text'], ['방식', 'select', ['구글뉴스', 'RSS']], ['값', 'text'], ['사용', 'select', ['Y', 'N']]],
+  도서: [['도서명', 'text'], ['대상', 'text'], ['저자', 'text'], ['핵심메시지', 'area'], ['독자고민', 'area'], ['차별점', 'area'], ['구성', 'area'], ['대표사례', 'area'], ['구매링크', 'area'], ['주의사항', 'area']],
+  스킬: [['유형', 'select', SKILL_TYPES], ['항목', 'text'], ['내용', 'area']],
+  콘텐츠: [['채널', 'select', ['블로그', '카페', '인스타그램', '스레드']], ['유형', 'select', TYPES], ['독자', 'select', ['학생', '교사', '학생·학부모', '공통']], ['제목', 'text'], ['키워드', 'area'], ['예정일', 'text']]
+};
+function badge(s) {
+  const c = ['완료', '발행 완료', '승인', '통과'].includes(s) ? 'b-good' : ['진행 중', '진행', '작성 중', '검수 요청', '승인 대기', '높음'].includes(s) ? 'b-warn' : ['지연', '수정 요청', '보완', '긴급'].includes(s) ? 'b-bad' : ['대기', '요청'].includes(s) ? 'b-wait' : s === '피드백' ? 'b-fb' : '';
+  return `<span class="badge ${c}">${esc(s || '-')}</span>`;
+}
+const opts = (list, cur) => { const l = list.includes(cur) || !cur ? list : [cur, ...list]; return l.map(o => `<option${o === cur ? ' selected' : ''}>${esc(o)}</option>`).join(''); };
+function merge(tab, row) {
+  const k = KEY[tab] || 'ID', a = S.d[tab] || (S.d[tab] = []), i = a.findIndex(x => x[k] === row[k]);
+  if (i < 0) a.push(row); else a[i] = Object.assign({}, a[i], row);
+  return row;
+}
+
+/* ===== 서버 통신 ===== */
+async function api(action, data, busy) {
+  if (busy) { S.busy = busy; render(); }
+  try {
+    if (MOCK) return await mock(action, data);
+    const r = await fetch(CONFIG.GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ token: sessionStorage.getItem('tok'), action, data }) });
+    const j = await r.json();
+    if (!j.ok) {
+      if (j.error === 'AUTH') { sessionStorage.removeItem('tok'); S.user = null; S.err = '로그인이 만료되었습니다. 다시 로그인해 주세요.'; }
+      throw new Error(j.error);
+    }
+    return j.data;
+  } finally { if (busy) S.busy = ''; }
+}
+async function run(fn) { try { await fn(); } catch (e) { if (e.message !== 'AUTH') alert(e.message); } render(); }
+async function load() {
+  try { const r = await api('init', {}, '불러오는 중입니다'); S.user = r.user; S.d = r.tabs; S.people = r.people || []; S.err = ''; }
+  catch (e) { S.user = null; if (e.message !== 'AUTH') S.err = e.message; }
+  render();
+}
+async function save(tab, row) { return merge(tab, await api('save', { tab, row })); }
+function initLogin() {
+  if (S.user || MOCK) return;
+  if (!window.google || !google.accounts) return setTimeout(initLogin, 200);
+  google.accounts.id.initialize({ client_id: CONFIG.CLIENT_ID, callback: r => { sessionStorage.setItem('tok', r.credential); load(); } });
+  const el = $('#gbtn'); if (el) google.accounts.id.renderButton(el, { theme: 'outline', size: 'large', text: 'signin_with', locale: 'ko' });
+}
+
+/* ===== 화면 ===== */
+function render() {
+  const app = $('#app');
+  if (!S.user) {
+    app.innerHTML = `<div class="login card"><img src="logo.png" alt="(주)이오북스" style="height:34px"><h1 style="margin-top:14px">마케팅 허브</h1><p class="muted">이오북스와 세일즈핏의 협업 현황, 콘텐츠 제작을 한곳에서 관리합니다.</p><div id="gbtn" style="display:flex;justify-content:center;margin-top:18px"></div>${S.err ? `<div class="err">${esc(S.err)}</div>` : ''}</div>${S.busy ? `<div class="busy">${esc(S.busy)}</div>` : ''}`;
+    return initLogin();
+  }
+  const V = { home: vHome, tasks: vTasks, requests: vRequests, meetings: vMeetings, calendar: vCalendar, studio: vStudio, news: vNews, leads: vLeads, docs: vDocs, skills: vSkills };
+  app.innerHTML = `${MOCK ? '<div class="demo">미리보기 모드입니다. 예시 데이터로 동작하며 저장되지 않습니다.</div>' : ''}
+<header><div class="top"><img src="logo.png" alt="(주)이오북스"><b>마케팅 허브</b><span class="who">${esc(S.user.name)} · ${esc(ROLE_NAME[S.user.role] || S.user.role)} <button data-act="reload">새로 고침</button></span></div>
+<nav>${NAV.map(([k, n]) => `<a href="#${k}" class="${S.view === k ? 'on' : ''}">${n}</a>`).join('')}</nav></header>
+<main>${(V[S.view] || vHome)()}</main>${S.modal ? vModal() : ''}${S.busy ? `<div class="busy">${esc(S.busy)}</div>` : ''}`;
+}
+const guide = t => `<div class="guide">${t}</div>`;
+
+const today = () => new Date(Date.now() + 9 * 36e5).toISOString().slice(0, 10);
+function due(x) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(x.기한 || '')) return { t: esc(x.기한 || '-'), late: false };
+  const d = Math.round((Date.parse(x.기한) - Date.parse(today())) / 864e5), open = !['완료', '보류'].includes(x.상태);
+  const tag = !open ? '' : d < 0 ? `${-d}일 지남` : d === 0 ? '오늘' : `D-${d}`;
+  return { t: `${x.기한.slice(5).replace('-', '/')}${tag ? ` <span class="${d < 0 ? 'over' : 'muted'}">${tag}</span>` : ''}`, late: open && d < 0 };
+}
+const mine = x => (x.담당자 === S.user.name && ['요청', '진행'].includes(x.상태)) || (x.요청자 === S.user.name && x.상태 === '피드백');
+const reqRow = x => `<tr class="click" data-act="rq-open" data-id="${x.ID}"><td>${esc(x.제목)}<small>${esc(x.요청자)} → ${esc(x.담당자)} · ${due(x).t}</small></td><td>${badge(x.상태)}</td></tr>`;
+function vHome() {
+  const t = S.d.과업, r = S.d.요청, c = S.d.콘텐츠, n = S.d.뉴스;
+  const stuck = t.filter(x => ['지연', '대기'].includes(x.상태)), todo = r.filter(mine), late = r.filter(x => due(x).late);
+  const k = [
+    ['내가 처리할 업무 요청', todo.length, 'requests', 'mine', 1], ['기한이 지난 업무 요청', late.length, 'requests', 'late', 1],
+    ['늦어지거나 멈춘 과업', stuck.length, 'tasks', '지연·대기', 1], ['검수를 기다리는 글', c.filter(x => x.상태 === '검수 요청').length, 'studio', '', 0],
+    ['승인을 기다리는 뉴스', n.filter(x => x.상태 === '승인 대기').length, 'news', '', 0]];
+  const soon = c.filter(x => !['발행 완료'].includes(x.상태)).slice(0, 6);
+  const mt = [...S.d.회의].sort((a, b) => b.일시.localeCompare(a.일시)).slice(0, 4);
+  return `<h1>이번 주 협업 현황</h1>${guide('숫자를 누르면 해당 목록으로 이동합니다. 화요일 정기 미팅은 이 화면을 보며 진행합니다.')}
+<div class="kpis">${k.map(x => `<div class="kpi ${x[4] && x[1] ? 'hot' : ''}" data-act="go" data-v="${x[2]}" data-st="${x[3]}"><b>${x[1]}</b><span>${x[0]}</span></div>`).join('')}</div>
+<div class="row"><div class="card"><h2>내가 처리할 업무 요청</h2><table>${todo.slice(0, 8).map(reqRow).join('') || '<tr><td class="muted">없습니다</td></tr>'}</table></div>
+<div class="card"><h2>기한이 지난 업무 요청</h2><table>${late.slice(0, 8).map(reqRow).join('') || '<tr><td class="muted">없습니다</td></tr>'}</table></div></div>
+<div class="row"><div class="card"><h2>회의록</h2><table>${mt.map(x => `<tr><td style="width:120px">${esc(x.일시)}</td><td>${esc(x.제목)}<small>${esc(x.결정사항 || x.요약)}</small></td><td style="width:70px">${x.링크 ? `<a href="${esc(x.링크)}" target="_blank" rel="noopener">열기</a>` : ''}</td></tr>`).join('')}</table></div>
+<div class="card"><h2>늦어지거나 멈춘 과업</h2><table>${stuck.slice(0, 6).map(x => `<tr class="click" data-act="edit" data-tab="과업" data-id="${x.ID}"><td>${esc(x.과업)}<small>${esc(x.담당자)} · ${esc(x.마감)}</small></td><td>${badge(x.상태)}</td></tr>`).join('') || '<tr><td class="muted">없습니다</td></tr>'}</table></div></div>
+<div class="card"><h2>다가오는 콘텐츠</h2><table>${soon.map(x => `<tr class="click" data-act="open" data-id="${x.ID}"><td style="width:90px">${esc(x.예정일)}</td><td style="width:80px">${esc(x.채널)}</td><td>${esc(x.제목 || x.키워드)}</td><td>${badge(x.상태)}</td></tr>`).join('')}</table></div>`;
+}
+
+function vTasks() {
+  const f = S.f.tasks, all = S.d.과업;
+  const rows = all.filter(x => (!f.영역 || x.영역 === f.영역) && (!f.담당조직 || x.담당조직 === f.담당조직) && (!f.상태 || (f.상태 === '지연·대기' ? ['지연', '대기'].includes(x.상태) : x.상태 === f.상태)));
+  const sel = (k, list) => `<select data-f="${k}"><option value="">${k} 전체</option>${list.map(o => `<option${f[k] === o ? ' selected' : ''}>${o}</option>`).join('')}</select>`;
+  const ed = can('과업');
+  return `<h1>과업</h1>${guide('세일즈핏이 제안했거나 진행 중인 과업입니다. 상태는 표에서 바로 바꾸고, 줄을 누르면 내용을 고칩니다.')}
+<div class="card"><div class="bar">${sel('영역', FORM.과업[0][2])}${sel('담당조직', ['이오북스', '세일즈핏', '공동'])}${sel('상태', ['지연·대기', ...ST.과업])}<span class="muted">${rows.length}건</span>${ed ? '<button class="pri sp" data-act="new" data-tab="과업">새 과업</button>' : ''}</div>
+<table><tr><th>ID</th><th>영역</th><th>과업</th><th>담당</th><th>마감</th><th>상태</th></tr>${rows.map(x => `<tr class="click" data-act="edit" data-tab="과업" data-id="${x.ID}"><td>${x.ID}</td><td>${esc(x.영역)}</td><td>${esc(x.과업)}<small>${esc(x.내용)}</small></td><td>${esc(x.담당조직)}<small>${esc(x.담당자)}</small></td><td>${esc(x.마감)}</td><td>${ed ? `<select data-st="과업" data-id="${x.ID}">${opts(ST.과업, x.상태)}</select>` : badge(x.상태)}</td></tr>`).join('')}</table></div>`;
+}
+function vRequests() {
+  const f = S.f.req, me = S.user.name, all = S.d.요청;
+  const scope = all.filter(x => f.who === 'mine' ? (x.담당자 === me || x.요청자 === me) : f.who === 'todo' ? mine(x) : f.who === 'late' ? due(x).late : true);
+  const rows = scope.filter(x => !f.st || x.상태 === f.st).sort((a, b) => (a.기한 || '9').localeCompare(b.기한 || '9'));
+  const who = [['mine', '내 업무'], ['todo', '내가 처리할 것'], ['late', '기한 지남'], ['all', '전체']];
+  return `<h1>업무 요청</h1>${guide('요청자가 담당자, 기한, 우선순위를 정해 요청하면 담당자가 진행으로 바꿉니다. 담당자가 피드백을 누르면 요청자가 완료하거나 다시 요청합니다. 보류는 양쪽 모두 할 수 있고, 모든 처리는 업무 아래 이력에 남습니다.')}
+<div class="chips">${who.map(([k, n]) => `<span class="chip ${f.who === k ? 'on' : ''}" data-act="rq-who" data-v="${k}">${n}</span>`).join('')}</div>
+<div class="card"><div class="bar">${['', ...ST.요청].map(st => `<span class="chip ${f.st === st ? 'on' : ''}" data-act="rq-st" data-v="${st}">${st || '모든 상태'} ${scope.filter(x => !st || x.상태 === st).length}</span>`).join('')}${can('요청') ? '<button class="pri sp" data-act="new" data-tab="요청">새 업무 요청</button>' : ''}</div>
+<table><tr><th>우선순위</th><th>업무</th><th>요청자 → 담당자</th><th>기한</th><th>상태</th></tr>${rows.map(x => `<tr class="click" data-act="rq-open" data-id="${x.ID}"><td>${badge(x.우선순위)}</td><td>${esc(x.제목)}<small>${esc(x.내용)}</small></td><td style="white-space:nowrap">${esc(x.요청자)} → ${esc(x.담당자)}</td><td style="white-space:nowrap">${due(x).t}</td><td>${badge(x.상태)}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">해당하는 업무가 없습니다</td></tr>'}</table></div>`;
+}
+function vReq(x) {
+  const me = S.user.name, adm = S.user.role === 'admin', isReq = adm || x.요청자 === me, isAsg = adm || x.담당자 === me, st = x.상태;
+  const btn = (to, label, cls = '') => `<button class="${cls}" data-act="rq-move" data-to="${to}">${label}</button>`;
+  const acts = [];
+  if (st === '요청' && isAsg) acts.push(btn('진행', '진행 시작', 'pri'));
+  if (st === '진행' && isAsg) acts.push(btn('피드백', '피드백 요청', 'pri'));
+  if (st === '피드백' && isReq) acts.push(btn('완료', '완료', 'pri'), btn('요청', '다시 요청'));
+  if (['요청', '진행', '피드백'].includes(st) && (isReq || isAsg)) acts.push(btn('보류', '보류'));
+  if (st === '보류' && (isReq || isAsg)) acts.push(btn('요청', '보류 해제'));
+  const hist = S.d.이력.filter(h => h.업무ID === x.ID);
+  const doc = /^https?:\/\//.test(x.관련문서) ? `<a href="${esc(x.관련문서)}" target="_blank" rel="noopener">${esc(x.관련문서)}</a>` : esc(x.관련문서 || '-');
+  return `<div class="modal"><div><div class="bar"><b>${x.ID}</b>${badge(st)}${badge(x.우선순위)}${isReq ? '<button class="sp" data-act="rq-edit">내용 수정</button>' : ''}</div>
+<h2>${esc(x.제목)}</h2><p class="muted">요청 ${esc(x.요청자)} → 담당 ${esc(x.담당자)} · 기한 ${due(x).t}</p>
+<pre class="msg">${esc(x.내용 || '(내용 없음)')}</pre><p class="muted">관련 문서 ${doc}</p>
+<label class="fld">메모<textarea id="rq_note" rows="2" placeholder="처리하면서 남길 말. 다시 요청하거나 보류할 때는 사유를 꼭 적습니다"></textarea></label>
+<div class="bar">${acts.join('')}<button data-act="rq-comment">댓글만 남기기</button><button class="sp" data-act="m-close">닫기</button></div>
+<h2 style="margin-top:14px">이력</h2><div class="hist">${hist.map(h => `<div><b>${esc(h.동작)}</b> · ${esc(h.사용자)} <span class="muted">${esc(h.시각)}</span>${h.내용 ? `<br>${esc(h.내용)}` : ''}</div>`).join('') || '<span class="muted">기록이 없습니다</span>'}</div></div></div>`;
+}
+function vMeetings() {
+  const rows = [...S.d.회의].sort((a, b) => b.일시.localeCompare(a.일시));
+  return `<h1>회의록</h1>${guide('회의마다 요약과 결정 사항을 적고 회의록 원문 링크를 연결합니다. 열기를 누르면 원문으로 바로 갑니다.')}
+<div class="card"><div class="bar"><span class="muted">${rows.length}건</span>${can('회의') ? '<button class="pri sp" data-act="new" data-tab="회의">회의 추가</button>' : ''}</div>
+<table><tr><th>일시</th><th>회의</th><th>결정 사항</th><th>참석</th><th>회의록</th></tr>${rows.map(x => `<tr class="click" data-act="edit" data-tab="회의" data-id="${x.ID}"><td style="white-space:nowrap">${esc(x.일시)}${x.일시.slice(0, 10) >= today() ? ' <span class="badge b-wait">예정</span>' : ''}</td><td>${esc(x.제목)}<small>${esc(x.요약)}</small></td><td>${esc(x.결정사항)}</td><td>${esc(x.참석)}</td><td>${x.링크 ? `<a href="${esc(x.링크)}" target="_blank" rel="noopener" data-stop>열기</a>` : ''}</td></tr>`).join('')}</table></div>`;
+}
+function vDocs() {
+  return `<h1>문서</h1>${guide('노션, 구글 시트, 드라이브에 흩어진 문서의 링크와 요약입니다.')}
+<div class="card"><div class="bar"><span class="muted">${S.d.문서.length}건</span>${can('문서') ? '<button class="pri sp" data-act="new" data-tab="문서">링크 추가</button>' : ''}</div>
+<table><tr><th>위치</th><th>문서</th><th>작성</th><th>열람 상태</th></tr>${S.d.문서.map(x => `<tr class="click" data-act="edit" data-tab="문서" data-id="${x.ID}"><td>${esc(x.위치)}</td><td>${x.링크 ? `<a href="${esc(x.링크)}" target="_blank" rel="noopener" data-stop>${esc(x.문서명)}</a>` : esc(x.문서명)}<small>${esc(x.요약)}</small></td><td>${esc(x.작성)}</td><td>${esc(x.열람상태)}</td></tr>`).join('')}</table></div>`;
+}
+function vCalendar() {
+  return `<h1>콘텐츠 캘린더</h1>${guide('채널별 계획과 진행 상태입니다. 줄을 누르면 블로그 스튜디오에서 열립니다.')}
+<div class="card"><div class="bar"><span class="muted">${S.d.콘텐츠.length}건</span>${can('콘텐츠') ? '<button class="pri sp" data-act="new" data-tab="콘텐츠">새 글 추가</button>' : ''}</div>
+<table><tr><th>예정일</th><th>채널</th><th>유형</th><th>독자</th><th>제목</th><th>상태</th></tr>${S.d.콘텐츠.map(x => `<tr class="click" data-act="open" data-id="${x.ID}"><td>${esc(x.예정일)}</td><td>${esc(x.채널)}</td><td>${esc(x.유형)}</td><td>${esc(x.독자)}</td><td>${esc(x.제목 || '(제목 미정)')}<small>${esc(x.키워드)}</small></td><td>${badge(x.상태)}</td></tr>`).join('')}</table></div>`;
+}
+
+function vStudio() {
+  const list = S.d.콘텐츠, c = list.find(x => x.ID === S.sel);
+  const left = `<div class="card list" style="padding:6px">${list.map(x => `<div class="item ${x.ID === S.sel ? 'on' : ''}" data-act="open" data-id="${x.ID}">${esc(x.제목 || '(제목 미정) ' + x.키워드.slice(0, 24))}<small>${esc(x.예정일)} · ${esc(x.채널)} · ${esc(x.유형)} ${badge(x.상태)}</small></div>`).join('')}</div>`;
+  if (!c) return `<h1>블로그 스튜디오</h1>${guide('왼쪽에서 글을 고르면 구성안, 본문, 자동 점검, 검수까지 한 화면에서 진행합니다.')}<div class="studio">${left}<div class="card muted">글을 선택해 주세요.</div></div>`;
+  const ed = can('콘텐츠'), dis = ed ? '' : ' disabled';
+  let chk = []; try { chk = JSON.parse(c.점검결과 || '[]'); } catch (e) { }
+  const pass = chk.filter(x => x.결과 === '통과').length;
+  const books = S.d.도서.map(b => `<option value="${b.ID}"${b.ID === c.도서ID ? ' selected' : ''}>${esc(b.도서명)}</option>`).join('');
+  const done = ['승인', '발행 완료'].includes(c.상태);
+  return `<h1>블로그 스튜디오</h1>${guide('순서대로 진행합니다. 초록 버튼은 AI가 콘텐츠 스킬과 도서 정보를 바탕으로 작성합니다. 내용은 언제든 직접 고칠 수 있습니다.')}
+<div class="studio">${left}<div class="card">
+<div class="bar"><b>${c.ID}</b>${badge(c.상태)}<span class="muted">작성 ${esc(c.작성자 || '-')} · 승인 ${esc(c.승인자 || '-')} · ${esc(c.수정시각 || '')}</span>${ed ? '<button class="sp" data-act="st-save">저장</button>' : ''}</div>
+<div class="step" style="border:0;margin:0;padding:0"><h3><i>1</i>무엇을 쓸지 정합니다</h3>
+<div class="grid2"><label class="fld">글 유형<select id="f_유형"${dis}>${opts(TYPES, c.유형)}</select></label><label class="fld">독자<select id="f_독자"${dis}>${opts(['학생', '교사', '학생·학부모', '공통'], c.독자)}</select></label>
+<label class="fld">도서<select id="f_도서ID"${dis}><option value="">선택 안 함</option>${books}</select></label><label class="fld">예정일<input id="f_예정일" value="${esc(c.예정일)}"${dis}></label></div>
+<label class="fld">제목<input id="f_제목" value="${esc(c.제목)}" placeholder="비워 두면 구성안에서 제목 후보를 받습니다"${dis}></label>
+<label class="fld">핵심 키워드와 요청<textarea id="f_키워드" rows="2"${dis}>${esc(c.키워드)}</textarea></label></div>
+<div class="step"><h3><i>2</i>구성안</h3><div class="bar"><button class="ai" data-act="st-ai" data-kind="outline"${dis}>구성안 만들기</button><span class="muted">제목 후보, 문단별 요지, 필요한 이미지가 나옵니다.</span></div><textarea id="f_구성안" rows="9"${dis}>${esc(c.구성안)}</textarea></div>
+<div class="step"><h3><i>3</i>본문</h3><div class="bar"><button class="ai" data-act="st-ai" data-kind="body"${dis}>본문 만들기</button><span class="muted">${(c.본문 || '').replace(/\s/g, '').length.toLocaleString()}자(공백 제외)</span><button class="sp" data-act="st-cmp">${S.cmp ? '비교 닫기' : '기존 글과 비교'}</button></div>
+<div class="${S.cmp ? 'grid2' : ''}"><textarea id="f_본문" rows="18"${dis}>${esc(c.본문)}</textarea>${S.cmp ? `<textarea id="f_비교원문" rows="18" placeholder="비교할 기존 글을 붙여 넣으세요"${dis}>${esc(c.비교원문)}</textarea>` : ''}</div>
+<div class="bar" style="margin-top:10px"><input id="f_img" style="flex:1;min-width:220px" placeholder="일러스트로 그릴 내용 (예: 편의점 진열대 앞에서 물음표를 떠올리는 고등학생)"${dis}><button class="ai" data-act="st-img"${dis}>일러스트 만들기</button></div>
+${S.img[c.ID] ? `<img src="${S.img[c.ID]}" alt="생성한 일러스트" style="max-width:320px;border:1px solid var(--line);border-radius:8px">` : ''}${c.이미지 ? `<p class="muted">저장된 이미지 ${c.이미지.split('\n').filter(Boolean).map((u, i) => `<a href="${esc(u)}" target="_blank" rel="noopener">${i + 1}</a>`).join(' · ')} (구글 드라이브 '마케팅 허브 이미지' 폴더)</p>` : ''}</div>
+<div class="step"><h3><i>4</i>자동 점검</h3><div class="bar"><button class="ai" data-act="st-ai" data-kind="check"${dis}>자동 점검 실행</button>${chk.length ? `<span class="muted">${chk.length}개 항목 중 ${pass}개 통과</span>` : '<span class="muted">콘텐츠 스킬의 점검 항목으로 확인합니다.</span>'}</div>
+${chk.length ? `<table><tr><th>항목</th><th>결과</th><th>근거</th><th>제안</th></tr>${chk.map(x => `<tr><td>${esc(x.항목)}</td><td>${badge(x.결과)}</td><td>${esc(x.근거)}</td><td>${esc(x.제안)}</td></tr>`).join('')}</table>` : ''}</div>
+<div class="step"><h3><i>5</i>검수</h3><label class="fld">검수 의견<textarea id="f_검수의견" rows="3" placeholder="수정이 필요한 부분과 이유"${approver() ? '' : ' disabled'}>${esc(c.검수의견)}</textarea></label>
+<div class="bar">${ed ? `<button data-act="st-status" data-v="검수 요청"${done ? ' disabled' : ''}>검수 요청</button>` : ''}${approver() ? `<button data-act="st-status" data-v="수정 요청">수정 요청</button><button class="pri" data-act="st-status" data-v="승인">승인</button>` : '<span class="muted">승인은 이오북스 담당자가 합니다.</span>'}</div></div>
+<div class="step"><h3><i>6</i>발행</h3>${done ? `<div class="bar"><button data-act="st-copy">본문 복사</button><input id="f_발행주소" style="flex:1;min-width:200px" placeholder="발행한 블로그 글 주소" value="${esc(c.발행주소)}"><button class="pri" data-act="st-status" data-v="발행 완료">발행 완료</button></div>` : '<span class="muted">승인된 글만 발행할 수 있습니다.</span>'}</div>
+</div></div>`;
+}
+function studioPatch() {
+  const p = { ID: S.sel };
+  ['유형', '독자', '도서ID', '예정일', '제목', '키워드', '구성안', '본문', '비교원문', '검수의견', '발행주소'].forEach(k => { const el = $('#f_' + k); if (el && !el.disabled) p[k] = el.value; });
+  return p;
+}
+
+function vNews() {
+  const all = [...S.d.뉴스].reverse(), n = all[0];
+  let items = []; try { items = JSON.parse(n ? n.후보 : '[]'); } catch (e) { }
+  const ed = can('뉴스');
+  return `<h1>데일리 뉴스</h1>${guide('이오티처 AI 자료실 채팅방에 올릴 소식입니다. 초안을 만들고, 문안을 다듬어 승인한 뒤 복사해 붙여 넣습니다.')}
+<div class="card"><div class="bar"><h2 style="margin:0">오늘의 초안</h2>${n ? badge(n.상태) : ''}${ed ? '<button class="ai sp" data-act="nw-make">오늘의 초안 만들기</button>' : ''}</div>
+${n ? `<p class="muted">${esc(n.날짜)} 생성${n.승인자 ? ' · 승인 ' + esc(n.승인자) : ''}</p>
+<table>${items.map(x => `<tr><td><a href="${esc(x.링크)}" target="_blank" rel="noopener">${esc(x.제목)}</a><small>${esc(x.출처)}</small></td><td>${esc(x.한줄)}<small>교실 팁 · ${esc(x.팁)}</small></td></tr>`).join('')}</table>
+<label class="fld" style="margin-top:12px">채팅방 문안<textarea id="n_문안" rows="12"${ed ? '' : ' disabled'}>${esc(n.문안)}</textarea></label>
+<div class="bar">${ed ? '<button data-act="nw-save">문안 저장</button>' : ''}${approver() ? '<button class="pri" data-act="nw-ok">승인</button>' : ''}<button data-act="nw-copy"${n.상태 === '승인' ? '' : ' disabled'}>문안 복사</button>${n.상태 === '승인' ? '' : '<span class="muted">승인 후에 복사할 수 있습니다.</span>'}</div>` : '<p class="muted">아직 만든 초안이 없습니다.</p>'}</div>
+<div class="row"><div class="card"><h2>뉴스 소스</h2><table><tr><th>이름</th><th>방식</th><th>값</th><th>사용</th></tr>${S.d.뉴스소스.map(x => `<tr class="click" data-act="edit" data-tab="뉴스소스" data-id="${x.ID}"><td>${esc(x.이름)}</td><td>${esc(x.방식)}</td><td>${esc(x.값)}</td><td>${esc(x.사용)}</td></tr>`).join('')}</table>${can('뉴스소스') ? '<div class="bar" style="margin-top:10px"><button data-act="new" data-tab="뉴스소스">소스 추가</button></div>' : ''}</div>
+<div class="card"><h2>지난 초안</h2><table>${all.slice(1, 11).map(x => `<tr><td>${esc(x.날짜)}</td><td>${badge(x.상태)}</td></tr>`).join('') || '<tr><td class="muted">없습니다</td></tr>'}</table></div></div>`;
+}
+function vLeads() {
+  const st = [['신청', 0], ['선정', 0], ['발송', 0], ['후속 연락', 0], ['상담', 0], ['결과', 0]];
+  return `<h1>견본 신청</h1>${guide('화면 구성만 먼저 보여 드립니다. 12/1 견본 신청 오픈에 맞춰 구글폼 응답과 연결할 예정이며, 지금은 데이터가 없습니다.')}
+<div class="kpis">${st.map(x => `<div class="kpi"><b>${x[1]}</b><span>${x[0]}</span></div>`).join('')}</div>
+<div class="card"><h2>이 화면에서 하게 될 일</h2><table>
+<tr><td style="width:120px"><b>신청</b></td><td>구글폼 응답이 유입 경로와 함께 자동으로 들어옵니다. 중복 신청을 표시합니다.</td></tr>
+<tr><td><b>선정·발송</b></td><td>발송 대상을 정하고 명단을 엑셀로 내려받습니다. 발송일을 입력합니다.</td></tr>
+<tr><td><b>후속 연락</b></td><td>발송 후 3일, 7일, 14일, 21일, 30일에 보낼 안내가 할 일로 표시됩니다.</td></tr>
+<tr><td><b>상담·결과</b></td><td>상담 희망 학교를 영업 담당에게 넘기고 결과를 기록합니다.</td></tr>
+<tr><td><b>동의·보유 기간</b></td><td>필수 동의와 선택 동의를 따로 기록하고, 보유 기간 만료일을 자동으로 계산합니다.</td></tr></table></div>`;
+}
+function vSkills() {
+  const t = S.f.skill, ed = can('스킬'), rows = S.d.스킬.filter(x => x.유형 === t);
+  return `<h1>콘텐츠 스킬</h1>${guide('AI가 글을 쓸 때 따르는 규칙입니다. 여기서 고치면 다음 생성부터 바로 반영됩니다. 수정은 이오북스 담당자만 할 수 있습니다.')}
+<div class="chips">${SKILL_TYPES.map(x => `<span class="chip ${x === t ? 'on' : ''}" data-act="sk-type" data-v="${x}">${x}</span>`).join('')}</div>
+<div class="card">${rows.map(x => `<div class="fld"><b>${esc(x.항목)}</b><textarea rows="2" data-sk="${x.ID}"${ed ? '' : ' disabled'}>${esc(x.내용)}</textarea><span class="muted">${x.수정시각 ? '수정 ' + esc(x.수정시각) + ' · ' + esc(x.수정자) : ''}</span></div>`).join('') || '<p class="muted">항목이 없습니다.</p>'}
+${ed ? '<div class="bar"><button class="pri" data-act="sk-save">변경 내용 저장</button><button data-act="new" data-tab="스킬">항목 추가</button></div>' : ''}</div>
+<div class="card"><div class="bar"><h2 style="margin:0">도서 정보</h2>${can('도서') ? '<button class="sp" data-act="new" data-tab="도서">도서 추가</button>' : ''}</div><p class="muted">글이 책 내용과 어긋나지 않게 하는 기준 자료입니다.</p>
+<table>${S.d.도서.map(b => `<tr class="click" data-act="edit" data-tab="도서" data-id="${b.ID}"><td style="width:230px"><b>『${esc(b.도서명)}』</b><small>${esc(b.대상)}</small></td><td>${esc(b.핵심메시지)}<small>${esc(b.주의사항)}</small></td></tr>`).join('')}</table></div>`;
+}
+function vModal() {
+  const m = S.modal;
+  if (m.detail) return vReq(S.d.요청.find(x => x.ID === m.row.ID));
+  const ro = !can(m.tab);
+  const fld = ([k, type, list]) => {
+    const d = ro ? ' disabled' : '', v = m.row[k];
+    if (type === 'select') { const l = typeof list === 'function' ? list() : list; return `<select data-k="${k}"${d}>${opts(l, v || (m.row.ID ? '' : l[0]))}</select>`; }
+    if (type === 'area') return `<textarea data-k="${k}" rows="3"${d}>${esc(v)}</textarea>`;
+    return `<input data-k="${k}" type="${type === 'date' ? 'date' : 'text'}" value="${esc(v)}"${d}>`;
+  };
+  return `<div class="modal"><div><h2>${m.tab === '요청' ? '업무 요청' : esc(m.tab)} ${m.row.ID ? esc(m.row.ID) : '추가'}</h2>${FORM[m.tab].map(f => `<label class="fld">${f[0]}${fld(f)}</label>`).join('')}
+<div class="bar"><button data-act="m-close">닫기</button>${ro ? '' : `<button class="pri sp" data-act="m-save">${m.tab === '요청' && !m.row.ID ? '요청하기' : '저장'}</button>`}</div></div></div>`;
+}
+
+/* ===== 동작 ===== */
+const ACT = {
+  reload: () => load(),
+  go: el => { if (el.dataset.v === 'tasks') S.f.tasks = { 영역: '', 담당조직: '', 상태: el.dataset.st }; if (el.dataset.v === 'requests') S.f.req = { who: el.dataset.st === 'late' ? 'late' : 'todo', st: '' }; location.hash = el.dataset.v; },
+  edit: el => { const row = S.d[el.dataset.tab].find(x => x.ID === el.dataset.id); S.modal = { tab: el.dataset.tab, row: Object.assign({}, row) }; render(); },
+  new: el => { S.modal = { tab: el.dataset.tab, row: el.dataset.tab === '스킬' ? { 유형: S.f.skill } : {} }; render(); },
+  'm-close': () => { S.modal = null; render(); },
+  'm-save': () => run(async () => {
+    const m = S.modal, row = Object.assign({}, m.row);
+    document.querySelectorAll('.modal [data-k]').forEach(el => row[el.dataset.k] = el.value);
+    if (m.tab === '요청') { applyReq(await api('req', { op: row.ID ? 'edit' : 'create', id: row.ID, row })); S.modal = row.ID ? { tab: '요청', row, detail: true } : null; return; }
+    if (m.tab === '콘텐츠' && !row.ID) row.상태 = '예정';
+    const saved = await save(m.tab, row); S.modal = null;
+    if (m.tab === '콘텐츠') { S.sel = saved.ID; location.hash = 'studio'; }
+  }),
+  'rq-open': el => { S.modal = { tab: '요청', row: { ID: el.dataset.id }, detail: true }; render(); },
+  'rq-who': el => { S.f.req.who = el.dataset.v; render(); },
+  'rq-st': el => { S.f.req.st = el.dataset.v; render(); },
+  'rq-edit': () => { S.modal = { tab: '요청', row: Object.assign({}, S.d.요청.find(x => x.ID === S.modal.row.ID)) }; render(); },
+  'rq-move': el => run(async () => applyReq(await api('req', { op: 'move', id: S.modal.row.ID, to: el.dataset.to, note: $('#rq_note').value }))),
+  'rq-comment': () => run(async () => applyReq(await api('req', { op: 'comment', id: S.modal.row.ID, note: $('#rq_note').value }))),
+  'st-img': () => run(async () => {
+    const prompt = $('#f_img').value; await save('콘텐츠', studioPatch());
+    const r = await api('image', { id: S.sel, prompt }, '일러스트를 그리고 있습니다. 1분 안팎 걸립니다.');
+    merge('콘텐츠', r.row); S.img[S.sel] = r.data;
+  }),
+  open: el => { S.sel = el.dataset.id; S.cmp = false; if (S.view === 'studio') render(); else location.hash = 'studio'; },
+  'st-save': () => run(() => save('콘텐츠', studioPatch())),
+  'st-cmp': () => run(async () => { if (can('콘텐츠')) await save('콘텐츠', studioPatch()); S.cmp = !S.cmp; }),
+  'st-ai': el => run(async () => {
+    await save('콘텐츠', studioPatch());
+    merge('콘텐츠', await api('ai', { kind: el.dataset.kind, id: S.sel }, 'AI가 작성하고 있습니다. 1분 안팎 걸립니다.'));
+  }),
+  'st-status': el => run(async () => {
+    const p = studioPatch(), v = el.dataset.v;
+    if (v === '수정 요청' && !(p.검수의견 || '').trim()) throw new Error('수정 요청에는 검수 의견을 적어 주세요.');
+    if (v === '발행 완료' && !(p.발행주소 || '').trim()) throw new Error('발행한 글 주소를 입력해 주세요.');
+    p.상태 = v; await save('콘텐츠', p);
+  }),
+  'st-copy': () => copy($('#f_본문').value),
+  'nw-make': () => run(async () => merge('뉴스', await api('news', {}, '소식을 모아 문안을 쓰고 있습니다. 1분 안팎 걸립니다.'))),
+  'nw-save': () => run(() => save('뉴스', { ID: S.d.뉴스.at(-1).ID, 문안: $('#n_문안').value })),
+  'nw-ok': () => run(() => save('뉴스', { ID: S.d.뉴스.at(-1).ID, 문안: $('#n_문안').value, 상태: '승인' })),
+  'nw-copy': () => copy($('#n_문안').value),
+  'sk-type': el => { S.f.skill = el.dataset.v; render(); },
+  'sk-save': () => run(async () => {
+    const changed = [...document.querySelectorAll('[data-sk]')].filter(el => el.value !== S.d.스킬.find(x => x.ID === el.dataset.sk).내용);
+    if (!changed.length) throw new Error('바뀐 내용이 없습니다.');
+    for (const el of changed) await save('스킬', { ID: el.dataset.sk, 내용: el.value });
+  })
+};
+function applyReq(r) { merge('요청', r.row); S.d.이력.push(...r.hist); }
+function copy(text) { navigator.clipboard.writeText(text).then(() => alert('복사했습니다.'), () => alert('복사하지 못했습니다. 직접 선택해 복사해 주세요.')); }
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-stop],select,input,textarea')) return;
+  const el = e.target.closest('[data-act]'); if (el && ACT[el.dataset.act]) ACT[el.dataset.act](el);
+});
+document.addEventListener('change', e => {
+  const el = e.target;
+  if (el.dataset.f) { S.f.tasks[el.dataset.f] = el.value; render(); }
+  else if (el.dataset.st === '과업') run(() => save('과업', { ID: el.dataset.id, 상태: el.value }));
+});
+function route() { const v = location.hash.slice(1); S.view = NAV.some(n => n[0] === v) ? v : 'home'; S.modal = null; render(); window.scrollTo(0, 0); }
+window.addEventListener('hashchange', route);
+
+/* ===== 미리보기용 예시 데이터 (실제 데이터 아님) ===== */
+const SAMPLE = {
+  과업: [{ ID: 'T-001', 영역: '기반', 과업: '도서 안내 페이지와 신청 폼', 내용: '광고와 콘텐츠의 도착 페이지', 담당조직: '공동', 담당자: '세일즈핏 제작 / 이오북스 권한', 마감: '11월 2주', 상태: '대기', 근거: '' },
+  { ID: 'T-002', 영역: '콘텐츠', 과업: '공식 블로그 주 2회', 내용: '정보형, 미리보기형', 담당조직: '공동', 담당자: '세일즈핏 작성 → 이오북스 검수', 마감: '11월~', 상태: '진행 중', 근거: '' },
+  { ID: 'T-003', 영역: '운영', 과업: '주간 정기 미팅', 내용: '진행 점검, 결정, 액션', 담당조직: '공동', 담당자: '공동', 마감: '매주 화', 상태: '완료', 근거: '' },
+  { ID: 'T-004', 영역: '제휴', 과업: '교사 커뮤니티 제휴 제안', 내용: '10곳', 담당조직: '세일즈핏', 담당자: '세일즈핏', 마감: '11월 2주', 상태: '지연', 근거: '' }],
+  요청: [{ ID: 'R-001', 제목: '도서명, 정가, 출간일, 표지 확정', 내용: '광고 문안과 안내 페이지에 필요', 요청자: '예시 요청자', 담당자: '미리보기', 기한: '2026-11-13', 우선순위: '높음', 관련문서: '', 상태: '요청' },
+  { ID: 'R-002', 제목: '블로그 글 검수', 내용: '', 요청자: '미리보기', 담당자: '예시 담당자', 기한: '2026-12-20', 우선순위: '보통', 관련문서: '', 상태: '피드백' },
+  { ID: 'R-003', 제목: 'SNS 채널 개설', 내용: '', 요청자: '예시 요청자', 담당자: '미리보기', 기한: '2026-11-05', 우선순위: '보통', 관련문서: '', 상태: '완료' }],
+  이력: [{ 시각: '2026-11-14 21:00', 업무ID: 'R-001', 사용자: '예시 요청자', 동작: '요청 등록', 내용: '' }],
+  회의: [{ ID: 'M-001', 일시: '2026-11-17 11:00', 제목: '정기 미팅', 참석: '이오북스, 세일즈핏', 요약: '진행 점검', 결정사항: '', 링크: 'https://example.com' }],
+  문서: [{ ID: 'D-001', 위치: '구글 시트', 문서명: '실행계획', 링크: '', 작성: '세일즈핏', 요약: '키워드, 광고, 캘린더', 열람상태: '열람 가능' }],
+  도서: [{ ID: 'B-001', 도서명: '예시 도서', 대상: '고등학생', 저자: '', 핵심메시지: '작은 궁금증을 질문으로 넓힌다', 독자고민: '', 차별점: '', 구성: '', 대표사례: '', 구매링크: '', 주의사항: '예시 데이터' }],
+  스킬: [{ ID: 'S-001', 유형: '공통', 항목: '도입부', 내용: '독자가 겪는 구체적인 상황으로 시작한다.' }, { ID: 'S-002', 유형: '도서 소개', 항목: '구성', 내용: '고민 → 예시 → 앞으로의 콘텐츠 → 도서 정보' }, { ID: 'S-003', 유형: '점검', 항목: '도입부', 내용: '독자의 고민으로 시작하는가' }, { ID: 'S-004', 유형: '데일리 뉴스', 항목: '길이와 말투', 내용: '전체 500자 안팎' }],
+  콘텐츠: [{ ID: 'C-001', 채널: '블로그', 유형: '도서 소개', 독자: '학생', 도서ID: 'B-001', 키워드: '고등학생 주제 탐구', 제목: '', 구성안: '', 본문: '', 점검결과: '', 검수의견: '', 상태: '예정', 예정일: '11/17 주', 발행주소: '', 비교원문: '', 작성자: '', 승인자: '' },
+  { ID: 'C-002', 채널: '블로그', 유형: '정보형', 독자: '교사', 도서ID: '', 키워드: '', 제목: '교사를 위한 바이브 코딩이란?', 구성안: '', 본문: '', 점검결과: '', 검수의견: '', 상태: '예정', 예정일: '11/26', 발행주소: '', 비교원문: '', 작성자: '', 승인자: '' }],
+  뉴스소스: [{ ID: 'N-001', 이름: 'AI 교육 교사', 방식: '구글뉴스', 값: 'AI 교육 교사', 사용: 'Y' }], 뉴스: []
+};
+async function mock(action, data) {
+  await new Promise(r => setTimeout(r, action === 'ai' || action === 'news' ? 700 : 80));
+  if (action === 'init') return { user: { email: 'preview@example.com', name: '미리보기', org: '이오북스', role: 'admin' }, tabs: JSON.parse(JSON.stringify(SAMPLE)), people: [{ 이름: '미리보기', 소속: '이오북스' }, { 이름: '예시 담당자', 소속: '세일즈핏' }, { 이름: '예시 요청자', 소속: '세일즈핏' }] };
+  if (action === 'save') { const row = Object.assign({}, data.row); if (!row.ID) row.ID = 'X-' + String(Date.now()).slice(-4); if (row.상태 === '승인') row.승인자 = '미리보기'; return row; }
+  if (action === 'req') {
+    const now = new Date().toISOString().slice(0, 16).replace('T', ' '), h = (id, a, n) => ({ 시각: now, 업무ID: id, 사용자: '미리보기', 동작: a, 내용: n || '' });
+    if (data.op === 'create') { const row = Object.assign({ ID: 'R-' + String(Date.now()).slice(-4), 요청자: '미리보기', 상태: '요청' }, data.row); return { row, hist: [h(row.ID, '요청 등록')] }; }
+    if (data.op === 'edit') return { row: data.row, hist: [h(data.id, '수정')] };
+    if (data.op === 'comment') return { row: { ID: data.id }, hist: [h(data.id, '댓글', data.note)] };
+    if ((data.to === '보류' || data.to === '요청') && !data.note && S.d.요청.find(x => x.ID === data.id).상태 !== '보류') throw new Error('사유를 적어 주세요.');
+    return { row: { ID: data.id, 상태: data.to }, hist: [h(data.id, data.to, data.note)] };
+  }
+  if (action === 'image') return { row: { ID: data.id }, data: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200"><rect width="320" height="200" fill="#eef4d0"/><text x="160" y="105" text-anchor="middle" font-size="16">미리보기 이미지</text></svg>') };
+  if (action === 'ai') {
+    const o = { ID: data.id };
+    if (data.kind === 'outline') { o.구성안 = '(미리보기) 제목 후보 3개\n1. …\n\n문단별 구성\n1) 독자의 고민 …'; o.상태 = '작성 중'; }
+    if (data.kind === 'body') o.본문 = '(미리보기) 실제 연결 후에는 콘텐츠 스킬과 도서 정보를 바탕으로 본문이 작성됩니다.';
+    if (data.kind === 'check') o.점검결과 = JSON.stringify([{ 항목: '도입부', 결과: '통과', 근거: '독자의 상황으로 시작', 제안: '' }, { 항목: '마무리', 결과: '보완', 근거: '구매 링크 없음', 제안: '링크 추가' }]);
+    return o;
+  }
+  if (action === 'news') return { ID: 'NW-' + String(Date.now()).slice(-4), 날짜: new Date().toISOString().slice(0, 10), 후보: JSON.stringify([{ 제목: '(미리보기) 예시 소식', 출처: '예시', 링크: '#', 한줄: '요약 한 줄', 팁: '교실 팁' }]), 문안: '(미리보기) 오늘의 AI·교육 소식\n\n1. 예시 소식 …', 상태: '승인 대기', 승인자: '' };
+}
+
+/* ===== 시작 ===== */
+S.view = NAV.some(n => n[0] === location.hash.slice(1)) ? location.hash.slice(1) : 'home';
+if (MOCK || sessionStorage.getItem('tok')) load(); else render();
+</script>
+</body>
+</html>
