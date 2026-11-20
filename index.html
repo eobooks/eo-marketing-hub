@@ -50,6 +50,7 @@ button{font:inherit;border:1px solid #cfd4dc;background:#fff;border-radius:7px;p
 button.pri{background:var(--ink);border-color:var(--ink);color:#fff}
 button.ai{background:var(--lime);border-color:var(--lime-d);color:#26300a}
 button.del{color:#b42318;border-color:#f1b0aa}button.del.on{background:#b42318;border-color:#b42318;color:#fff}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#1f2937;color:#fff;padding:9px 16px;border-radius:9px;font-size:14px;z-index:40;box-shadow:0 4px 14px rgba(0,0,0,.18);max-width:92vw}
 .nb{display:inline-block;min-width:17px;height:17px;line-height:17px;padding:0 5px;margin-left:5px;border-radius:99px;background:#e5484d;color:#fff;font-size:11px;font-weight:700;font-style:normal;text-align:center;vertical-align:1px}
 .nw{display:inline-block;margin-left:6px;padding:0 7px;border-radius:99px;background:var(--bad);color:#b42318;font-size:11.5px;font-weight:700;white-space:nowrap;vertical-align:1px}
 .cmts{margin:6px 0 12px}.cmts>div{border-top:1px solid var(--line);padding:9px 0;font-size:14.5px}.cmts .body{white-space:pre-wrap;word-break:break-word;margin-top:3px}
@@ -185,7 +186,7 @@ async function run(fn) { try { await fn(); } catch (e) { if (e.message !== 'AUTH
 async function load() {
   try { const r = await api('init', {}, '불러오는 중입니다'); S.user = r.user; S.d = r.tabs; S.people = r.people || []; S.err = '';
     S.noRef = !S.d.레퍼런스; S.d.레퍼런스 = S.d.레퍼런스 || []; S.d.레퍼런스댓글 = S.d.레퍼런스댓글 || [];
-    seenLoad(); enter(S.view); }
+    seenLoad(); enter(S.view); if (!S.modal) openLinked(); }
   catch (e) { S.user = null; if (e.message !== 'AUTH') S.err = e.message; }
   render();
 }
@@ -259,6 +260,7 @@ function vRequests() {
 <table><tr><th>우선순위</th><th>업무</th><th>요청자 → 담당자</th><th>기한</th><th>상태</th></tr>${rows.map(x => `<tr class="click" data-act="rq-open" data-id="${x.ID}"><td>${badge(x.우선순위)}</td><td>${esc(x.제목)}${nw('요청', x)}<small>${esc(x.내용)}</small></td><td style="white-space:nowrap">${esc(x.요청자)} → ${esc(x.담당자)}</td><td style="white-space:nowrap">${due(x).t}</td><td>${badge(x.상태)}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">해당하는 업무가 없습니다</td></tr>'}</table></div>`;
 }
 function vReq(x) {
+  if (!x) return `<div class="modal"><div><p class="muted">삭제되었거나 찾을 수 없는 업무 요청입니다.</p><div class="bar"><button class="sp" data-act="m-close">닫기</button></div></div></div>`;
   const me = S.user.name, adm = S.user.role === 'admin', isReq = adm || x.요청자 === me, isAsg = adm || x.담당자 === me, st = x.상태;
   const btn = (to, label, cls = '') => `<button class="${cls}" data-act="rq-move" data-to="${to}">${label}</button>`;
   const acts = [];
@@ -470,7 +472,14 @@ const ACT = {
     for (const el of changed) await save('스킬', { ID: el.dataset.sk, 내용: el.value });
   })
 };
-function applyReq(r) { merge('요청', r.row); S.d.이력.push(...r.hist); }
+function toast(t) { const e = document.createElement('div'); e.className = 'toast'; e.textContent = t; document.body.appendChild(e); setTimeout(() => e.remove(), 5000); }
+function applyReq(r) {
+  merge('요청', r.row); S.d.이력.push(...r.hist);
+  const m = r.mail; if (!m) return;
+  if (m.error) toast('처리는 저장했지만 메일 알림을 보내지 못했습니다.');
+  else if (m.to && m.to.length) toast('메일로 알렸습니다 · ' + m.to.join(', '));
+  else if (m.miss && m.miss.length) toast('사용자 목록에 없는 이름이라 메일을 보내지 못했습니다 · ' + m.miss.join(', '));
+}
 function copy(text) { navigator.clipboard.writeText(text).then(() => alert('복사했습니다.'), () => alert('복사하지 못했습니다. 직접 선택해 복사해 주세요.')); }
 document.addEventListener('click', e => {
   if (e.target.closest('[data-stop],select,input,textarea')) return;
@@ -481,7 +490,10 @@ document.addEventListener('change', e => {
   if (el.dataset.f) { S.f.tasks[el.dataset.f] = el.value; render(); }
   else if (el.dataset.st === '과업') run(() => save('과업', { ID: el.dataset.id, 상태: el.value }));
 });
-function route() { const v = location.hash.slice(1), prev = S.view; S.view = NAV.some(n => n[0] === v) ? v : 'home'; S.modal = null; S.del = null; S.cdel = null; if (S.view !== prev) enter(S.view); render(); window.scrollTo(0, 0); }
+const hashParts = () => { const [v, id] = decodeURIComponent(location.hash.slice(1)).split('/'); return { v: NAV.some(n => n[0] === v) ? v : 'home', id: id || '' }; };
+/* 메일의 바로가기(#requests/R-031)로 들어오면 그 업무를 바로 엽니다. */
+function openLinked() { const { v, id } = hashParts(); if (S.user && v === 'requests' && id) { S.f.req = { who: 'all', st: '' }; S.modal = { tab: '요청', row: { ID: id }, detail: true }; history.replaceState(null, '', '#' + v); } }
+function route() { const prev = S.view; S.view = hashParts().v; S.modal = null; S.del = null; S.cdel = null; if (S.view !== prev) enter(S.view); openLinked(); render(); window.scrollTo(0, 0); }
 window.addEventListener('hashchange', route);
 
 /* ===== 미리보기용 예시 데이터 (실제 데이터 아님) ===== */
@@ -510,12 +522,13 @@ async function mock(action, data) {
   if (action === 'save') { const row = Object.assign({}, data.row); if (!row.ID) row.ID = 'X-' + String(Date.now()).slice(-4); if (row.상태 === '승인') row.승인자 = '미리보기'; return row; }
   if (action === 'req') {
     const now = new Date().toISOString().slice(0, 16).replace('T', ' '), h = (id, a, n) => ({ 시각: now, 업무ID: id, 사용자: '미리보기', 동작: a, 내용: n || '' });
-    if (data.op === 'create') { const row = Object.assign({ ID: 'R-' + String(Date.now()).slice(-4), 요청자: '미리보기', 상태: '요청' }, data.row); return { row, hist: [h(row.ID, '요청 등록')] }; }
+    const other = id => { const x = S.d.요청.find(x => x.ID === id) || {}; return [x.요청자, x.담당자].filter(n => n && n !== '미리보기'); };
+    if (data.op === 'create') { const row = Object.assign({ ID: 'R-' + String(Date.now()).slice(-4), 요청자: '미리보기', 상태: '요청' }, data.row); return { row, hist: [h(row.ID, '요청 등록')], mail: { to: [row.담당자].filter(n => n && n !== '미리보기'), miss: [] } }; }
     if (data.op === 'edit') return { row: data.row, hist: [h(data.id, '수정')] };
-    if (data.op === 'comment') return { row: { ID: data.id }, hist: [h(data.id, '댓글', data.note)] };
+    if (data.op === 'comment') return { row: { ID: data.id }, hist: [h(data.id, '댓글', data.note)], mail: { to: other(data.id), miss: [] } };
     if (data.op === 'delete') return { deleted: data.id };
     if ((data.to === '보류' || data.to === '요청') && !data.note && S.d.요청.find(x => x.ID === data.id).상태 !== '보류') throw new Error('사유를 적어 주세요.');
-    return { row: { ID: data.id, 상태: data.to }, hist: [h(data.id, data.to, data.note)] };
+    return { row: { ID: data.id, 상태: data.to }, hist: [h(data.id, data.to, data.note)], mail: { to: other(data.id), miss: [] } };
   }
   if (action === 'ref') {
     const now = new Date(Date.now() + 9 * 36e5).toISOString().slice(0, 16).replace('T', ' '), id = p => p + '-' + String(Date.now()).slice(-4);
@@ -536,7 +549,7 @@ async function mock(action, data) {
 }
 
 /* ===== 시작 ===== */
-S.view = NAV.some(n => n[0] === location.hash.slice(1)) ? location.hash.slice(1) : 'home';
+S.view = hashParts().v;
 if (MOCK || sessionStorage.getItem('tok')) load(); else render();
 </script>
 </body>
